@@ -2,6 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!--
+resultType：指定输出结果的类型(POJO)，将sql查询结果映射为对象，
+使用resultType注意，sql查询的类名和resultType指定的pojo的属性名相同，
+指定相同的属性方可映射成功,如果sql查询的类名要和resultType
+指定的pojo属性名全部不相同，List中无法创建pojo。
+
+resultMap：将sql查询结果映射为Java对象
+如果sql查询列名和最终要映射的pojo属性名不一致，
+使用resultMap将列名和pojo的属性名做一个对应关系（列名和属性名映射配置）。
+
+-->
 <mapper namespace="com.sleepy.zeo.dao.CustomerDao">
     <select id="fetchAllCustomers" resultType="com.sleepy.zeo.bean.CustomerBean">
         select * from t_customer
