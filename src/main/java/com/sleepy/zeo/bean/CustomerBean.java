@@ -6,6 +6,10 @@ public class CustomerBean {
     private String gender;
     private String telephone;
 
+    private String password;
+    private String grade;
+    private int age;
+
     public Integer getId() {
         return id;
     }
@@ -38,6 +42,30 @@ public class CustomerBean {
         this.telephone = telephone;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
     @Override
     public String toString() {
         return "CustomerBean[" +
@@ -45,6 +73,9 @@ public class CustomerBean {
                 ", name='" + name + '\'' +
                 ", gender='" + gender + '\'' +
                 ", telephone='" + telephone + '\'' +
+                ", password='" + password + '\'' +
+                ", grade='" + grade + '\'' +
+                ", age=" + age +
                 ']';
     }
 }

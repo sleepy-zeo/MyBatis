@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <properties resource="jdbc.properties"/>
+
+    <!-- 连接池: pooled unpooled jndi -->
+    <environments default="mysql">
+        <environment id="mysql">
+            <transactionManager type="jdbc"/>
+            <dataSource type="pooled">
+                <property name="url" value="${jdbc.url}"/>
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- 只支持xml -->
+    <mappers>
+        <mapper resource="mappers/customer-mapper.xml"/>
+        <mapper resource="mappers/order-mapper.xml"/>
+        <mapper resource="mappers/user-mapper.xml"/>
+    </mappers>
+
+    <!-- 注解 -->
+    <!--<mappers>-->
+    <!--<package name="com.sleepy.zeo.dao"/>-->
+    <!--</mappers>-->
+
+</configuration>

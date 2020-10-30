@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sleepy.zeo.dao.UserDao">
+    <resultMap id="userOrder" type="com.sleepy.zeo.bean.UserOrderBean">
+        <id property="id" column="uid"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <collection property="orders" ofType="com.sleepy.zeo.bean.OrderBean">
+            <id property="id" column="id"/>
+            <result property="orderno" column="orderno"/>
+            <result property="amount" column="amount"/>
+            <result property="userId" column="user_id"/>
+        </collection>
+    </resultMap>
+
+    <select id="fetchAllUsers" resultMap="userOrder">
+        select
+        t_user.id uid,
+        username,
+        password,
+        t_order.*
+        from t_user
+        left join t_order
+        on t_user.id=t_order.user_id
+    </select>
+
+</mapper>
