@@ -1,6 +1,6 @@
-#MyBatis
+# MyBatis
 
-##动态sql
+## 动态sql
 > if
 
 这里的AND前面必须要有空格，不然拼接后的sql有语法错误
