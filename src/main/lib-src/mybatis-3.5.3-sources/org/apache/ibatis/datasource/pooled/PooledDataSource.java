@@ -86,6 +86,7 @@ public class PooledDataSource implements DataSource {
 
     @Override
     public Connection getConnection() throws SQLException {
+        // 获取链接
         return popConnection(dataSource.getUsername(), dataSource.getPassword()).getProxyConnection();
     }
 
@@ -401,6 +402,12 @@ public class PooledDataSource implements DataSource {
         }
     }
 
+    /**
+     * 连接池中如果有空闲的连接对象，直接返回第一个连接对象
+     * 连接池中如果没有空闲的连接对象，判断活动连接池是否小于连接池承载的最大数量，
+     *          如果小于则创建新的连接对象
+     *          如果大于则把最先进来的连接返回出去
+     */
     private PooledConnection popConnection(String username, String password) throws SQLException {
         boolean countedWait = false;
         PooledConnection conn = null;
@@ -437,14 +444,14 @@ public class PooledDataSource implements DataSource {
                                 try {
                                     oldestActiveConnection.getRealConnection().rollback();
                                 } catch (SQLException e) {
-                  /*
-                     Just log a message for debug and continue to execute the following
-                     statement like nothing happened.
-                     Wrap the bad connection with a new PooledConnection, this will help
-                     to not interrupt current executing thread and give current thread a
-                     chance to join the next competition for another valid/good database
-                     connection. At the end of this loop, bad {@link @conn} will be set as null.
-                   */
+                                    /*
+                                    Just log a message for debug and continue to execute the following
+                                    statement like nothing happened.
+                                    Wrap the bad connection with a new PooledConnection, this will help
+                                    to not interrupt current executing thread and give current thread a
+                                    chance to join the next competition for another valid/good database
+                                    connection. At the end of this loop, bad {@link @conn} will be set as null.
+                                    */
                                     log.debug("Bad connection. Could not roll back");
                                 }
                             }
@@ -456,7 +463,7 @@ public class PooledDataSource implements DataSource {
                                 log.debug("Claimed overdue connection " + conn.getRealHashCode() + ".");
                             }
                         } else {
-                            // Must wait
+                            // 活动连接池头部的不是最老的，等待下一次while
                             try {
                                 if (!countedWait) {
                                     state.hadToWaitCount++;

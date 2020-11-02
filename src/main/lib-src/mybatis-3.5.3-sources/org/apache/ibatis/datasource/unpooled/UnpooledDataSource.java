@@ -92,6 +92,7 @@ public class UnpooledDataSource implements DataSource {
 
     @Override
     public Connection getConnection() throws SQLException {
+        // 获取连接
         return doGetConnection(username, password);
     }
 
@@ -213,12 +214,18 @@ public class UnpooledDataSource implements DataSource {
         if (password != null) {
             props.setProperty("password", password);
         }
+        // 配置properties，然后开启连接
         return doGetConnection(props);
     }
 
+    // 可以看出每次的链接都要经过 注册驱动 - 建立连接 - 配置连接 这个流程
+    // 频繁的创建和销毁连接对象，会影响程序的运行效率
     private Connection doGetConnection(Properties properties) throws SQLException {
+        // 注册驱动
         initializeDriver();
+        // 创建链接
         Connection connection = DriverManager.getConnection(url, properties);
+        // 配置链接
         configureConnection(connection);
         return connection;
     }
