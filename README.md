@@ -74,8 +74,12 @@ sql片段复用
 http://www.yiidian.com/mybatis/dynamic-sql.html
 ```
 
+## 连接池
 
-
+MyBatis支持三种连接池
+- Pooled：   实现dataSource接口，使用了池的思想
+- UNPooled： 实现dataSource接口，没有使用池的思想
+- JNDI：     采用服务器提供的JNDI技术实现，并且在不同服务器之间获取的连接池不一样
 
 
 
